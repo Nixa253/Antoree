@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Copy wait-for-mysql
-COPY wait-for-mysql.sh /wait-for-mysql.sh
-RUN chmod +x /wait-for-mysql.sh
+# # Copy wait-for-mysql
+# COPY wait-for-mysql.sh /wait-for-mysql.sh
+# RUN chmod +x /wait-for-mysql.sh
 
 WORKDIR /var/www
 
