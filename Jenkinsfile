@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'docker:24.0.2-cli' // hoặc docker:stable-cli
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // kết nối Docker host
+            image 'docker:24.0.2-cli'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
@@ -20,6 +20,8 @@ pipeline {
 
         stage('Build containers') {
             steps {
+                sh 'docker version' // test docker command
+                sh 'docker compose version'
                 sh 'docker compose build'
             }
         }
@@ -50,7 +52,7 @@ pipeline {
 
         stage('Deploy All') {
             steps {
-                echo 'All containers are up. Deployment done.'
+                echo 'Deployment successful.'
             }
         }
     }
