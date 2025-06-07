@@ -12,16 +12,15 @@ pipeline {
     }
 
     stages {
-        stage('Checkout source') {
+        stage('Test Docker CLI') {
             steps {
-                checkout scm
+                sh 'docker version'
+                sh 'docker compose version'
             }
         }
 
         stage('Build containers') {
             steps {
-                sh 'docker version' // test docker command
-                sh 'docker compose version'
                 sh 'docker compose build'
             }
         }
