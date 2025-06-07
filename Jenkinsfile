@@ -1,36 +1,50 @@
 pipeline {
-    agent {
-        docker { image 'php:8.2-cli' }
-    }
+    agent any
 
     environment {
-        APP_ENV = 'local'
+        COMPOSE_FILE = 'docker-compose.yml'
     }
 
     stages {
-        stage('Clone source') {
+        stage('Checkout source') {
             steps {
-                echo 'Code pulled from GitHub'
+                checkout scm
             }
         }
 
-        stage('Install dependencies') {
+        stage('Build containers') {
             steps {
-                sh 'apt update && apt install -y unzip zip curl git'
-                sh 'curl -sS https://getcomposer.org/installer | php'
-                sh 'php composer.phar install'
+                sh 'docker compose build'
             }
         }
 
-        stage('Run tests') {
+        stage('Install Backend dependencies') {
             steps {
-                echo 'You can run PHPUnit or any test script here'
+                sh 'docker compose run --rm backend composer install'
             }
         }
 
-        stage('Deploy') {
+        stage('Run Backend Migrations') {
             steps {
-                echo 'Here you can deploy to Docker or Cloud'
+                sh 'docker compose run --rm backend php artisan migrate'
+            }
+        }
+
+        stage('Install Frontend dependencies') {
+            steps {
+                sh 'docker compose run --rm frontend npm install'
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                sh 'docker compose run --rm frontend npm run build'
+            }
+        }
+
+        stage('Deploy All') {
+            steps {
+                sh 'docker compose up -d'
             }
         }
     }
