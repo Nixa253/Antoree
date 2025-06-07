@@ -1,32 +1,36 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'php:8.2-cli' }
+    }
+
+    environment {
+        APP_ENV = 'local'
+    }
 
     stages {
-        stage('Clone Repository') {
+        stage('Clone source') {
             steps {
-                git 'https://github.com/Nixa253/Antoree.git'
+                echo 'Code pulled from GitHub'
             }
         }
 
-        stage('Build Backend') {
+        stage('Install dependencies') {
             steps {
-                dir('backend') {
-                    sh 'docker build -t antoree-backend .'
-                }
+                sh 'apt update && apt install -y unzip zip curl git'
+                sh 'curl -sS https://getcomposer.org/installer | php'
+                sh 'php composer.phar install'
             }
         }
 
-        stage('Build Frontend') {
+        stage('Run tests') {
             steps {
-                dir('frontend') {
-                    sh 'docker build -t antoree-frontend .'
-                }
+                echo 'You can run PHPUnit or any test script here'
             }
         }
 
-        stage('Deploy with Docker Compose') {
+        stage('Deploy') {
             steps {
-                sh 'docker-compose up -d'
+                echo 'Here you can deploy to Docker or Cloud'
             }
         }
     }
