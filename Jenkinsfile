@@ -57,7 +57,7 @@ pipeline {
 
         stage('Run Backend Migrations') {
             steps {
-                sh 'docker compose exec backend php artisan migrate'
+                sh 'docker compose exec backend php artisan migrate --force'
             }
         }
 
