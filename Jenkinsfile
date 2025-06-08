@@ -61,6 +61,12 @@ pipeline {
             }
         }
 
+        stage('Check Backend Files') {
+            steps {
+                sh 'docker compose exec backend ls -l /var/www || true'
+            }
+        }
+
         stage('Deploy All') {
             steps {
                 echo 'Deployment successful!'
