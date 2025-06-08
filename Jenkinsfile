@@ -33,7 +33,7 @@ pipeline {
 
         stage('Start containers') {
             steps {
-                sh 'docker compose up -d'
+                sh 'docker compose up -d mysql backend frontend'
             }
         }
 
