@@ -55,11 +55,11 @@ pipeline {
             }
         }
 
-        stage('Run Backend Migrations') {
-            steps {
-                sh 'docker compose exec backend php artisan migrate --force'
-            }
-        }
+        // stage('Run Backend Migrations') {
+        //     steps {
+        //         sh 'docker compose exec backend php artisan migrate --force'
+        //     }
+        // }
 
         stage('Install Frontend dependencies') {
             steps {
