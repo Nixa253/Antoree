@@ -25,6 +25,18 @@ pipeline {
             }
         }
 
+        stage('Build Backend Image') {
+            steps {
+                sh 'docker build -t laravel-app -f backend/Dockerfile backend'
+            }
+        }
+
+        stage('Build Frontend Image') {
+            steps {
+                sh 'docker build -t antoree-frontend-app -f frontend/Dockerfile frontend'
+            }
+        }
+
         stage('Build containers') {
             steps {
                 sh 'docker compose build'
