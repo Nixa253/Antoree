@@ -12,6 +12,15 @@ pipeline {
     }
 
     stages {
+        stage('Cleanup containers') {
+            steps {
+                sh 'docker rm -f mysql || true'
+                sh 'docker rm -f antoree-backend || true'
+                sh 'docker rm -f antoree-frontend || true'
+                sh 'docker rm -f jenkins || true'
+            }
+        }
+
         stage('Test Docker CLI') {
             steps {
                 sh 'docker --version'
