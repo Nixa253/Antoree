@@ -15,8 +15,6 @@ pipeline {
         stage('Cleanup containers') {
             steps {
                 sh 'docker rm -f mysql || true'
-                sh 'docker rm -f antoree-backend || true'
-                sh 'docker rm -f antoree-frontend || true'
             }
         }
 
@@ -65,7 +63,7 @@ pipeline {
 
         stage('Deploy All') {
             steps {
-                echo 'Deployment successful.'
+                echo 'Deployment successful!'
             }
         }
     }
