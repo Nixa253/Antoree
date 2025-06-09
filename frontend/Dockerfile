@@ -19,7 +19,6 @@ COPY . .
 RUN npm run build
 
 # Expose port from environment or default to 3000
-EXPOSE 3000
+EXPOSE ${PORT:-3000}
 
-# Start the production server using 'serve'
-CMD ["serve", "-s", "dist", "--listen", "0.0.0.0:${PORT}"]
+CMD serve -s dist --listen tcp://0.0.0.0:${PORT:-3000}
