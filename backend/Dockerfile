@@ -16,10 +16,6 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# # # Copy wait-for-mysql
-# COPY wait-for-mysql.sh /wait-for-mysql.sh
-# RUN chmod +x /wait-for-mysql.sh
-
 WORKDIR /var/www
 
 COPY . .
@@ -33,5 +29,5 @@ RUN chmod 600 /var/www/storage/oauth-private.key || true \
     && chmod 600 /var/www/storage/oauth-public.key || true
 
 EXPOSE 10000
-CMD sh -c 'php artisan serve --host=0.0.0.0 --port=${PORT:-10000}'
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
 
