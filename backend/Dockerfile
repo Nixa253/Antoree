@@ -32,6 +32,6 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 RUN chmod 600 /var/www/storage/oauth-private.key || true \
     && chmod 600 /var/www/storage/oauth-public.key || true
 
-EXPOSE ${PORT}
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
+EXPOSE 9000
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port", "${PORT:-9000}"]
 
