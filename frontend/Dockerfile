@@ -9,14 +9,17 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Install `serve` globally to serve build folder
+RUN npm install -g serve
+
 # Copy the rest of the app
 COPY . .
 
-# Build the app
+# Build the React app
 RUN npm run build
 
-# Expose port 3000 (or 80 if you use a static server)
-EXPOSE 3000
+# Expose port from environment or default to 3000
+EXPOSE ${PORT}
 
-# Start the app (adjust if you use a static server like serve)
-CMD ["npm", "start"]
+# Start the production server using 'serve'
+CMD ["serve", "-s", "build", "-l", "${PORT}"]
