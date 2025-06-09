@@ -9,6 +9,8 @@ pipeline {
     environment {
         COMPOSE_DOCKER_CLI_BUILD = '1'
         DOCKER_BUILDKIT = '1'
+        FRONTEND_HOOK_URL = 'https://api.render.com/deploy/srv-d133k8s9c44c738sh26g?key=HO1rWLN_gz0'
+        BACKEND_HOOK_URL = 'https://api.render.com/deploy/srv-d133h7k9c44c738seeag?key=4pmzhoGt_fU'
     }
 
     stages {
@@ -55,6 +57,7 @@ pipeline {
             }
         }
 
+        // Optional: run migrations if DB available
         // stage('Run Backend Migrations') {
         //     steps {
         //         sh 'docker compose exec backend php artisan migrate --force'
@@ -79,9 +82,21 @@ pipeline {
             }
         }
 
-        stage('Deploy All') {
+        stage('Trigger Render Deploy - Frontend') {
             steps {
-                echo 'Deployment successful!'
+                sh 'curl -X POST $FRONTEND_HOOK_URL'
+            }
+        }
+
+        stage('Trigger Render Deploy - Backend') {
+            steps {
+                sh 'curl -X POST $BACKEND_HOOK_URL'
+            }
+        }
+
+        stage('Finish') {
+            steps {
+                echo '✅ CI/CD completed and deployed to cloud!'
             }
         }
     }
