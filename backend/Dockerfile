@@ -29,5 +29,5 @@ RUN chmod 600 /var/www/storage/oauth-private.key || true \
     && chmod 600 /var/www/storage/oauth-public.key || true
 
 EXPOSE 10000
-CMD sh -c 'php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}'
+CMD sh -c 'php artisan serve --host=0.0.0.0 --port=${PORT:-10000}'
 
