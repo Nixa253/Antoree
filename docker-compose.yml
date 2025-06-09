@@ -1,20 +1,20 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    restart: always
-    environment:
-      MYSQL_DATABASE: antoree_user_management
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3307:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: mysql
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: antoree_user_management
+  #     MYSQL_ROOT_PASSWORD: root
+  #   ports:
+  #     - "3307:3306"
+  #   volumes:
+  #     - db_data:/var/lib/mysql
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
   backend:
     image: laravel-app
@@ -23,14 +23,11 @@ services:
     working_dir: /var/www
     environment:
       DB_CONNECTION: mysql
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: antoree_user_management
+      DB_HOST: mysql-production-4923.up.railway.app
+      DB_PORT: 47736
+      DB_DATABASE: railway
       DB_USERNAME: root
-      DB_PASSWORD: root
-    depends_on:
-      mysql:
-        condition: service_healthy
+      DB_PASSWORD: xwDPwLTBBDCILBwrnDqcOGZttzxOosAs
     ports:
       - "9000:9000"
 

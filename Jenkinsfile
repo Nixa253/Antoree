@@ -14,12 +14,6 @@ pipeline {
     }
 
     stages {
-        stage('Cleanup containers') {
-            steps {
-                sh 'docker rm -f mysql || true'
-            }
-        }
-
         stage('Test Docker CLI') {
             steps {
                 sh 'docker --version'
@@ -47,7 +41,7 @@ pipeline {
 
         stage('Start containers') {
             steps {
-                sh 'docker compose up -d mysql backend frontend'
+                sh 'docker compose up -d backend frontend'
             }
         }
 
