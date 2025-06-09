@@ -23,9 +23,6 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Generate Passport keys
-RUN php artisan passport:install --force
-
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 RUN chmod 600 /var/www/storage/oauth-private.key || true \
