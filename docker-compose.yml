@@ -23,7 +23,7 @@ services:
     working_dir: /var/www
     environment:
       DB_CONNECTION: mysql
-      DB_HOST: mysql-production-4923.up.railway.app
+      DB_HOST: switchyard.proxy.rlwy.net
       DB_PORT: 47736
       DB_DATABASE: railway
       DB_USERNAME: root
