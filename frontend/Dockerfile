@@ -21,4 +21,4 @@ RUN npm run build
 # Expose port from environment or default to 3000
 EXPOSE ${PORT:-3000}
 
-CMD serve -s dist --listen tcp://0.0.0.0:${PORT:-3000}
+CMD serve -s build --listen tcp://0.0.0.0:${PORT:-3000}
